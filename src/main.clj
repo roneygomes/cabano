@@ -1,9 +1,19 @@
 (ns main
   (:require [ports.http]
-            [adapters.price]))
+            [adapters.price]
+            [logic.stock])
+  (:import (java.lang Thread)))
 
-(defn -main [& {:as args}]
-  (->> (ports.http/daily-adjusted-prices! "ABEV3.SA" "HGHRH3AUEGWG6V8Z")
+(defn fetch-price! [symbol]
+  (->> (ports.http/daily-adjusted-prices! symbol "HGHRH3AUEGWG6V8Z")
        (:time-series-daily)
        (map (fn [[k v]] (adapters.price/wire->internal {k v})))
-       (clojure.pprint/pprint)))
+       (map #(logic.price/new-point symbol %))))
+
+(defn print-and-pause! [point]
+  (clojure.pprint/pprint point)
+  (Thread/sleep 13000))
+
+(defn -main [& {:as args}]
+  (mapv #(-> % fetch-price! print-and-pause!) logic.stock/symbols))
+
