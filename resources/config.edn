@@ -1,0 +1,4 @@
+{:db {:uri      "http://db:8086"
+      :user     "influxdb"
+      :password "influxdb"
+      :name     "cabano"}}
