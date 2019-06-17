@@ -20,4 +20,3 @@
 (defn -main [& {:as args}]
   (mount.core/start)
   (mapv #(-> % fetch-price! upsert-and-pause!) logic.stock/symbols))
-
