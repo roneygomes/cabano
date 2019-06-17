@@ -1,12 +1,5 @@
 (ns logic.price
-  (:import (java.time LocalDate)
-           (java.time.format DateTimeFormatter)))
-
-(defn- date-str->millis [date-str]
-  (let [milliseconds-in-a-day (* 24 60 60 1000)]
-    (-> (LocalDate/parse date-str DateTimeFormatter/ISO_DATE)
-        (.toEpochDay)
-        (* milliseconds-in-a-day))))
+  (:require [logic.date]))
 
 (defn- str->double [str]
   (try
@@ -18,7 +11,7 @@
   [symbol
    {:keys [split-coefficient, open, close, volume, high, low, adjusted-close, date]}]
   {:measurement "daily_adjusted_price"
-   :time        (date-str->millis date)
+   :time        (logic.date/date-str->millis date)
    :fields      {:split-coefficient (str->double split-coefficient)
                  :open              (str->double open)
                  :close             (str->double close)
