@@ -1,5 +1,10 @@
 {:deps    {org.clojure/clojure       {:mvn/version "1.10.0"}
            org.clojure/data.json     {:mvn/version "0.2.6"}
            clj-http                  {:mvn/version "3.10.0"}
-           mount                     {:mvn/version "0.1.16"}}
-        influxdb/influxdb-clojure {:mvn/version "0.2.0"}}
+           mount                     {:mvn/version "0.1.16"}
+           influxdb/influxdb-clojure {:mvn/version "0.2.0"}
+           midje/midje               {:mvn/version "1.9.8"}}
+
+ :aliases {:dev {:extra-paths ["test"]
+                 :extra-deps  {org.clojure/test.check {:mvn/version "0.9.0"}
+                               midje/midje            {:mvn/version "1.9.8"}}}}}

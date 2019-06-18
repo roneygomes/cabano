@@ -1,6 +1,6 @@
 (ns spec.price
   (:require [clojure.spec.alpha :as s]
-            [logic.date]))
+            [spec.date]))
 
 (s/def ::high double?)
 (s/def ::low double?)
@@ -8,7 +8,6 @@
 (s/def ::close double?)
 (s/def ::adjusted-close double?)
 (s/def ::split-coefficient double?)
-(s/def ::iso-date (s/and keyword? #(-> % name logic.date/iso-date?)))
 
 (s/def ::price (s/keys :req-un [::high
                                 ::low
@@ -17,7 +16,7 @@
                                 ::adjusted-close
                                 ::split-coefficient]))
 
-(s/def ::price-response (s/map-of ::iso-date ::price))
+(s/def ::price-response (s/map-of :spec.date/iso-date-str ::price))
 
 (comment
   ;; This is how a price response looks like.
